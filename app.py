@@ -21,7 +21,32 @@ app.config.suppress_callback_exceptions = True
 
 # Load data from csv
 def load_data():
-    # To do: Completar la función 
+    """
+    Carga el archivo 'datos_energia.csv' como un DataFrame.
+    La columna 'time' se convierte al formato datetime y se establece como índice.
+    Carga de datos.
+
+    Esta funcion retorna un Dataframe
+    
+    :return: DataFrame con los datos cargados y la columna 'time' como índice.
+    """
+    try:
+        # Cargamos los datos desde el archivo CSV
+        df = pd.read_csv('datos_energia.csv')
+        
+        # Convertimos la columna 'time' al formato datetime
+        df['time'] = pd.to_datetime(df['time'])
+        
+        # Establecemos la columna 'time' como índice
+        df.set_index('time', inplace=True)
+        
+        return df
+    except FileNotFoundError:
+        print("Error: El archivo 'datos_energia.csv' no se encuentra en el directorio.")
+        return None
+    except Exception as e:
+        print(f"Error al cargar los datos: {e}")
+        return None
     
 
 # Cargar datos
